@@ -1,0 +1,1 @@
+define(["can","routes/router","sortable"],function(t,e,n){return{init:function(){t.route.ready(!1),this.router=new e(document.body),n.init()}}});

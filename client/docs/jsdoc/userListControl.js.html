@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/controls/user/userListControl.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/controls/user/userListControl.js</h1>
+
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*global require, define, $, console */
+/*jslint todo: true */
+
+/**
+ * @module userListControl
+ */
+
+define([
+    'can',
+    'controls/defaultControl',
+    'text!templates/user/userlist.hbs',
+    'models/userModel',
+    'sortable'
+],
+    /**
+     * @name module:userListControl
+     * @description Userlist component
+     * @see module:userModel
+     * @see module:defaultControl
+     * @class can.Control
+     * @extends can.Control
+     * @constructor
+     * @requires can {Object} canjs
+     * @requires defaultControl {Function} constructor
+     * @requires templates/user/userlist {handlebars|mustache} userlist template
+     * @requires userModel {Function}
+     * @requires Sortable {Function} Table sorter
+     * @returns can.Control {Function} constructor
+     */
+
+        function (can, defaultControl, template, model, Sortable) {
+        "use strict";
+
+        return defaultControl.extend({
+
+            /**
+             * @name module:userListControl#model
+             * @description Model instance
+             * @type can.Model
+             * @field
+             */
+            model: model(),
+            /**
+             * @name module:userListControl#init
+             * @description Control initialization, model events bindings, userlist render
+             * @see module:userModel
+             * @function
+             */
+            init: function () {
+                // Context
+                var self = this,
+                    TABLE = ".b-table",
+                    // "Remove btn" classname
+                    CROSS = '.b-table__td--cross';
+
+                can.view.mustache("userlistHbs", template);
+                can.view('userlistHbs', self.model, function (frag) {
+
+                    // {jquery} Parent node declaration
+                    self.element = self.element.append(frag).find("#userlist");
+
+                    self.table = self.element.find(TABLE);
+                    self.table.on("click", CROSS, $.proxy(self.onRemoveClick, self));
+
+                    // Tiny simple table sorter
+                    // TODO: Finally should be replaced with model methods
+                    Sortable.initTable(self.table.get(0));
+
+                });
+
+
+                // Model event handlers: userlist auto-update
+                model.bind("created", $.proxy(self.fetch, this));
+                model.bind("destroyed", $.proxy(self.fetch, this));
+                model.bind("updated", $.proxy(self.fetch, this));
+
+
+                // Go!
+                this.fetch();
+            },
+            /**
+             * @name module:userListControl#onRemoveClick
+             * @description "Remove btn" click handler
+             * @param e {$.Event}
+             * @function
+             */
+            onRemoveClick: function (e) {
+                return this.remove(e.target);
+            },
+            /**
+             * @name module:userListControl#remove
+             * @description Remove action: table line annihilation &amp; .model.destroy()
+             * @param node {domElement} event.target
+             * @function
+             */
+            remove: function (node) {
+                var self = this,
+                    $node = $(node),
+                    id = $node.attr("data-id");
+                /* istanbul ignore else */
+                if (id) {
+                    $node.parent().remove();
+                    return self.model.destroy(id);
+                }
+                return id;
+            },
+
+            /**
+             * @name module:userListControl#fetch
+             * @description Updates the view after server-side events
+             * @function
+             */
+            fetch: function () {
+                var self = this;
+
+                return self.model.findAll().then(
+                    function () {
+                        /* istanbul ignore else */
+                        if (self.table) {
+                            self.table.find("th[data-sorted-direction]")
+                                .attr("data-sorted", "")
+                                .trigger('click');
+                        }
+                    }
+                );
+            }
+        });
+    });</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-conn_indicatorControl.html">conn_indicatorControl</a></li><li><a href="module-defaultControl.html">defaultControl</a></li><li><a href="module-defaultModel.html">defaultModel</a></li><li><a href="module-layoutControl.html">layoutControl</a></li><li><a href="module-layoutView.html">layoutView</a></li><li><a href="module-menuControl.html">menuControl</a></li><li><a href="module-menuView.html">menuView</a></li><li><a href="module-pushstate.html">pushstate</a></li><li><a href="module-rootComponent.html">rootComponent</a></li><li><a href="module-router.html">router</a></li><li><a href="module-socketPipe.html">socketPipe</a></li><li><a href="module-userControl.html">userControl</a></li><li><a href="module-userListControl.html">userListControl</a></li><li><a href="module-userModel.html">userModel</a></li></ul><h3>Classes</h3><ul><li><a href="Application.html">Application</a></li><li><a href="main.html">main</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Tue Mar 25 2014 23:43:22 GMT+0400 (VOLT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

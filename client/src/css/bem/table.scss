@@ -1,0 +1,27 @@
+.b-table{
+  width: 100%;
+  &__th{
+    font-size: smaller;
+    text-align: left;
+    border-bottom: 1px solid #DDD;
+  }
+  tbody tr:first-child td {
+    padding-top: .7em;
+  }
+  &__tr{
+    &:hover{
+      .b-table__td--cross{
+        color: #CCC;
+      }
+    }
+  }
+  &__td{
+    &--cross{
+      color: transparent;
+      &:hover{
+        color: #C00 !important;
+        cursor: pointer;
+      }
+    }
+  }
+}

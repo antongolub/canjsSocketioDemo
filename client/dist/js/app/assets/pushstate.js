@@ -1,0 +1,1 @@
+define([],function(){return window.history?function(t,n,o){window.history[o?"replaceState":"pushState"]({},n||"",t)}:function(t,n){document.location=t,document.title=n||""}});

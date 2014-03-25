@@ -1,0 +1,23 @@
+$activeMenuBg: #EEE;
+$linkColor: #36E;
+
+@import 'bem/page';
+@import 'bem/section';
+@import 'bem/menu';
+@import 'bem/table';
+@import 'bem/misc';
+@import 'bem/conn_indicator';
+@import 'modificators';
+
+
+
+a{
+  color: $linkColor;
+  &:hover{
+    color: #C00;
+  }
+}
+li, ul, ol, menu{
+  margin:0;
+  padding: 0;
+}

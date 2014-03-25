@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>menuControl.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="app.html">
+                app.js
+              </a>
+            
+              
+              <a class="source" href="pushstate.html">
+                pushstate.js
+              </a>
+            
+              
+              <a class="source" href="socketPipe.html">
+                socketPipe.js
+              </a>
+            
+              
+              <a class="source" href="conn_indicatorControl.html">
+                conn_indicatorControl.js
+              </a>
+            
+              
+              <a class="source" href="defaultControl.html">
+                defaultControl.js
+              </a>
+            
+              
+              <a class="source" href="layoutControl.html">
+                layoutControl.js
+              </a>
+            
+              
+              <a class="source" href="menuControl.html">
+                menuControl.js
+              </a>
+            
+              
+              <a class="source" href="rootControl.html">
+                rootControl.js
+              </a>
+            
+              
+              <a class="source" href="userControl.html">
+                userControl.js
+              </a>
+            
+              
+              <a class="source" href="userListControl.html">
+                userListControl.js
+              </a>
+            
+              
+              <a class="source" href="main.html">
+                main.js
+              </a>
+            
+              
+              <a class="source" href="defaultModel.html">
+                defaultModel.js
+              </a>
+            
+              
+              <a class="source" href="userModel.html">
+                userModel.js
+              </a>
+            
+              
+              <a class="source" href="users.html">
+                users.js
+              </a>
+            
+              
+              <a class="source" href="router.html">
+                router.js
+              </a>
+            
+              
+              <a class="source" href="layoutView.html">
+                layoutView.js
+              </a>
+            
+              
+              <a class="source" href="menuView.html">
+                menuView.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>menuControl.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/*global require, define, console, $ */</span>
+
+<span class="hljs-comment">/**
+ * @module menuControl
+ */</span>
+
+define([<span class="hljs-string">'can'</span>, <span class="hljs-string">'views/menuView'</span>],
+    <span class="hljs-comment">/**
+     * @name module:menuControl
+     * @description Menu render &amp; active section indication
+     * @see module:menuView
+     * @class can.Control
+     * @extends can.Control
+     * @constructor
+     * @requires can {Object} canjs
+     * @requires module:menuView {Function}
+     * @returns {Function} can.Control constructor
+     */</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(can, view)</span> {</span>
+<span class="hljs-pi">        'use strict'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Constants</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> ACTIVE = <span class="hljs-string">"b-menu__li__a--active"</span>,
+            HIGHLIGHTED = <span class="hljs-string">"b-menu__li__a--highlighted"</span>;
+
+        <span class="hljs-keyword">return</span> can.Control({
+            <span class="hljs-comment">/**
+             * @name module:menuControl#init
+             * @description Appends menu view to layout
+             * @function
+             */</span>
+            init: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
+
+
+                self.element.append(view());</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Menu items cache</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                self.items = $(<span class="hljs-string">"a"</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>HashChange event listener</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                can.route.bind(<span class="hljs-string">'change'</span>, $.proxy(self.onRouteChange, self));
+            },
+            <span class="hljs-comment">/**
+             * @name module:menuControl#onRouteChange
+             * @description Switches menu indication in accordance with the router state
+             * @function
+             */</span>
+            onRouteChange: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(ev, attr, how, newVal)</span> {</span>
+                <span class="hljs-keyword">var</span> className = ACTIVE,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>menu item selector {jQuery}</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    selector;
+                <span class="hljs-comment">/* istanbul ignore else */</span>
+                <span class="hljs-keyword">if</span> (attr === <span class="hljs-string">"route"</span>) {
+                    <span class="hljs-keyword">switch</span> (newVal) {
+                    <span class="hljs-keyword">case</span> <span class="hljs-string">"users"</span>:
+                        selector = <span class="hljs-string">"[href^='/users']"</span>;
+                        <span class="hljs-keyword">break</span>;
+                    <span class="hljs-keyword">case</span> <span class="hljs-string">"users/:id"</span>:
+                        selector = <span class="hljs-string">"[href^='/users']"</span>;
+                        className = HIGHLIGHTED;
+                        <span class="hljs-keyword">break</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Item’s being marked “active” as default</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    <span class="hljs-keyword">default</span>:
+                        selector = <span class="hljs-string">"[href='/']"</span>;
+                    }
+                    <span class="hljs-keyword">this</span>.switchItem(selector, className);
+                }
+                <span class="hljs-keyword">return</span> selector;
+            },
+            <span class="hljs-comment">/**
+             * @name module:menuControl#swithItem
+             * @param [selector] {String|jQuery} Item selector
+             * @param [className] {String} Added className
+             * @function
+             */</span>
+            switchItem: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(selector, className)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Target link {jQuery}</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,
+                    $target = self.items.filter(selector);
+                <span class="hljs-comment">/* istanbul ignore else */</span>
+                <span class="hljs-keyword">if</span> (!$target.hasClass(className)) {
+                    self.items.removeClass(ACTIVE + <span class="hljs-string">" "</span> + HIGHLIGHTED);
+                    $target.addClass(className);
+                }
+            }
+        });
+    });</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+.b-page {
+  display: block;
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0 2em; }
+  .b-page__main {
+    margin-top: 2em; }
+  .b-page__footer {
+    margin-top: 4em;
+    font-size: smaller;
+    color: silver; }
+
+.b-section .controlError,
+.b-section #add {
+  display: none; }
+.b-section--new #add {
+  display: inline; }
+.b-section--new #save,
+.b-section--new #remove {
+  display: none; }
+.b-section--error > * {
+  display: none; }
+.b-section--error .controlError {
+  display: block; }
+
+.b-menu__li {
+  list-style: none;
+  display: inline;
+  margin-right: .5em; }
+  .b-menu__li__a {
+    padding: .1em .4em;
+    margin-left: -.4em;
+    border-radius: .4em; }
+    .b-menu__li__a--active {
+      text-decoration: none;
+      cursor: default;
+      color: #3366ee !important;
+      background: #eeeeee; }
+    .b-menu__li__a--highlighted {
+      background: #eeeeee; }
+
+.b-table {
+  width: 100%; }
+  .b-table__th {
+    font-size: smaller;
+    text-align: left;
+    border-bottom: 1px solid #DDD; }
+  .b-table tbody tr:first-child td {
+    padding-top: .7em; }
+  .b-table__tr:hover .b-table__td--cross {
+    color: #CCC; }
+  .b-table__td--cross {
+    color: transparent; }
+    .b-table__td--cross:hover {
+      color: #C00 !important;
+      cursor: pointer; }
+
+.b-link {
+  color: #3366ee; }
+  .b-link:hover {
+    color: #C00; }
+  .b-link--silver {
+    color: silver; }
+  .b-link--single {
+    margin: 1em 0;
+    display: block; }
+  .b-link--smaller {
+    font-size: 70%; }
+
+.b-single_link {
+  font-size: 70%;
+  margin: 1em 0;
+  display: block; }
+
+.b-conn_indicator {
+  color: silver;
+  font-size: 25pt; }
+  .b-conn_indicator::after {
+    content: "offline";
+    font-size: 40%;
+    position: absolute;
+    margin: .75em 0 0 .5em; }
+  .b-conn_indicator--online {
+    color: #00A000; }
+    .b-conn_indicator--online::after {
+      content: "online"; }
+
+.hidden {
+  display: none; }
+
+a {
+  color: #3366ee; }
+  a:hover {
+    color: #C00; }
+
+li, ul, ol, menu {
+  margin: 0;
+  padding: 0; }

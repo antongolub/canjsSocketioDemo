@@ -1,0 +1,21 @@
+.b-menu {
+  &__li{
+    list-style: none;
+    display: inline;
+    margin-right: .5em;
+    &__a{
+      padding: .1em .4em;
+      margin-left: -.4em;
+      border-radius: .4em;
+      &--active{
+        text-decoration: none;
+        cursor: default;
+        color: $linkColor !important;
+        background: $activeMenuBg;
+      }
+      &--highlighted{
+        background: $activeMenuBg;
+      }
+    }
+  }
+}

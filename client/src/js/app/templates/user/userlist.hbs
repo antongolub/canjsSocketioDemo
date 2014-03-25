@@ -1,0 +1,25 @@
+
+<section id="userlist" class="b-section">
+    <a href="/users/new" id="addBtn" class="b-_link b-link--single b-link--smaller" title="Creates a new user profile">Add new one</a>
+    <table data-sortable id="userlistTable" class="b-table">
+        <thead>
+            <tr class="b-table__tr">
+                <th data-sorted-direction="ascending" data-type="number" class="b-table__th">Id</th>
+                <th class="b-table__th">Name</th>
+                <th class="b-table__th">Email</th>
+                <th class="b-table__th"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#list}}
+            <tr class="b-table__tr">
+                <td class="b-table__td">{{id}}</td>
+                <td class="b-table__td"><a class="b-link" href="/users/{{id}}" title="{{name}}'s profile">{{name}}</a></td>
+                <td class="b-table__td">{{email}}</td>
+                <td data-id="{{id}}}" class="b-table__td--cross">×</td>
+            </tr>
+            {{/list}}
+        </tbody>
+        <tfoot></tfoot>
+    </table>
+</section>

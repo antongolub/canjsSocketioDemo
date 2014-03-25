@@ -1,0 +1,19 @@
+
+
+
+.b-conn_indicator{
+  color: silver;
+  font-size: 25pt;
+  &::after{
+    content: "offline";
+    font-size: 40%;
+    position: absolute;
+    margin: .75em 0 0 .5em;
+  }
+  &--online{
+    color: #00A000;
+    &::after{
+      content: "online";
+    }
+  }
+}

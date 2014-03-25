@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/routes/router.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/routes/router.js</h1>
+
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*global require, define, $, console */
+
+/**
+ * @module router
+ */
+
+define([
+    "can",
+    "controls/layoutControl",
+    "controls/rootControl"
+],
+    /**
+     * @name module:router
+     * @description Main application router: route map &amp; controls initialization
+     * @see module:layoutControl
+     * @see module:routerControl
+     * @requires can {Object} canjs
+     * @requires module:layoutControl {Function} Layout control
+     * @requires module:routerControl {Function} Root control
+     * @class can.Control
+     * @extends can.Control
+     * @constructor
+     * @returns {Function} can.Control constructor
+     */
+        function (can, LayoutControl, RootControl) {
+        "use strict";
+
+        return can.Control({
+            /**
+             * @name module:router#init
+             * @description Creates application route map
+             * @function
+             */
+            init: function () {
+                var self = this;
+
+                // Layout control instance
+                self.controls.layoutControl = new LayoutControl($("body"));
+
+                // Main block. Controllers are attached here
+                self.$main = $("main");
+
+                // Root view control
+                self.controls.rootControl = new RootControl(self.$main);
+
+                can.route("/");
+                can.route("users");
+                can.route("users/:id");
+                can.route.ready();
+
+            },
+            /**
+             * @name module:router#controls
+             * @description Initialized controls
+             * @type Object
+             * @field
+             */
+            controls: {},
+            activeControl: null,
+            switchControl: function (control, data) {
+                if (control &amp;&amp; control !== this.activeControl) {
+                    if (this.activeControl) {
+                        this.activeControl.hide();
+                    }
+                    this.activeControl = control;
+                    control.show(data);
+                }
+            },
+            /**
+             * @name module:router#loadControl
+             * @description Load aggregated module (control)
+             * @function
+             * @param modulePath {String} Relative or absolute path
+             * @param controlPath {String} Path
+             * @param [fn] {Function} Optional callback
+             * @param [data] {Function} Route data
+             */
+            loadControl: function (modulePath, controlPath, fn, data) {
+                var Control = this.controls[controlPath],
+                    self = this;
+
+                // Check if module is loaded
+                if (!Control) {
+                    require([modulePath], function () {
+                        require([controlPath], function (Control) {
+
+                            // Target control initialization
+                            self.controls[controlPath] = Control = new Control(self.$main);
+
+                            if ($.isFunction(fn)) {
+                                fn(Control, data);
+                            }
+                        });
+                    });
+                } else if ($.isFunction(fn)) {
+                    fn(Control, data);
+                }
+            },
+            /**
+             * @name module:router#root route
+             * @description Root route handler
+             * @function
+             */
+            "/ route": function () {
+                var self = this;
+                self.switchControl(self.controls.rootControl);
+            },
+            /**
+             * @name module:router#users route
+             * @description Users (list) route handler
+             * @function
+             * @param data {String} Query data params
+             */
+            "users route": function (data) {
+                this.loadControl("modules/users", "controls/user/userListControl", $.proxy(this.switchControl, this), data);
+            },
+            /**
+             * @name module:router#users/:id route
+             * @description Users/id route handler
+             * @function
+             * @param data {String} Query data params
+             */
+            "users/:id route": function (data) {
+                this.loadControl("modules/users", "controls/user/userControl", $.proxy(this.switchControl, this), data);
+            }
+        });
+    });</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-conn_indicatorControl.html">conn_indicatorControl</a></li><li><a href="module-defaultControl.html">defaultControl</a></li><li><a href="module-defaultModel.html">defaultModel</a></li><li><a href="module-layoutControl.html">layoutControl</a></li><li><a href="module-layoutView.html">layoutView</a></li><li><a href="module-menuControl.html">menuControl</a></li><li><a href="module-menuView.html">menuView</a></li><li><a href="module-pushstate.html">pushstate</a></li><li><a href="module-rootComponent.html">rootComponent</a></li><li><a href="module-router.html">router</a></li><li><a href="module-socketPipe.html">socketPipe</a></li><li><a href="module-userControl.html">userControl</a></li><li><a href="module-userListControl.html">userListControl</a></li><li><a href="module-userModel.html">userModel</a></li></ul><h3>Classes</h3><ul><li><a href="Application.html">Application</a></li><li><a href="main.html">main</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a> on Tue Mar 25 2014 23:43:22 GMT+0400 (VOLT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

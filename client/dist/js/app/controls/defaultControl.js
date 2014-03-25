@@ -1,0 +1,1 @@
+define(["can"],function(e){return e.Control.extend({showError:function(e){var r,n=this;return e=e.toString(),e&&n.model&&n.model.errors&&(r=n.model.errors(e),n.element.find("[data-error="+e+"]").html(r?r[e].toString():"")),r},hide:function(){var e=this;e.element.hide()},show:function(){var e=this;e.element.show()}})});

@@ -1,0 +1,23 @@
+
+.b-link{
+  color: $linkColor;
+  &:hover{
+    color: #C00;
+  }
+  &--silver{
+    color: silver
+  }
+  &--single{
+    margin: 1em 0;
+    display: block;
+  }
+  &--smaller{
+    font-size: 70%;
+  }
+}
+
+.b-single_link{
+  font-size: 70%;
+  margin: 1em 0;
+  display: block;
+}

@@ -1,0 +1,14 @@
+.b-page{
+  display: block;
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0 2em;
+  &__main{
+    margin-top: 2em;
+  }
+  &__footer{
+    margin-top: 4em;
+    font-size: smaller;
+    color: silver;
+  }
+}

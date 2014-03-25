@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>defaultControl.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="app.html">
+                app.js
+              </a>
+            
+              
+              <a class="source" href="pushstate.html">
+                pushstate.js
+              </a>
+            
+              
+              <a class="source" href="socketPipe.html">
+                socketPipe.js
+              </a>
+            
+              
+              <a class="source" href="conn_indicatorControl.html">
+                conn_indicatorControl.js
+              </a>
+            
+              
+              <a class="source" href="defaultControl.html">
+                defaultControl.js
+              </a>
+            
+              
+              <a class="source" href="layoutControl.html">
+                layoutControl.js
+              </a>
+            
+              
+              <a class="source" href="menuControl.html">
+                menuControl.js
+              </a>
+            
+              
+              <a class="source" href="rootControl.html">
+                rootControl.js
+              </a>
+            
+              
+              <a class="source" href="userControl.html">
+                userControl.js
+              </a>
+            
+              
+              <a class="source" href="userListControl.html">
+                userListControl.js
+              </a>
+            
+              
+              <a class="source" href="main.html">
+                main.js
+              </a>
+            
+              
+              <a class="source" href="defaultModel.html">
+                defaultModel.js
+              </a>
+            
+              
+              <a class="source" href="userModel.html">
+                userModel.js
+              </a>
+            
+              
+              <a class="source" href="users.html">
+                users.js
+              </a>
+            
+              
+              <a class="source" href="router.html">
+                router.js
+              </a>
+            
+              
+              <a class="source" href="layoutView.html">
+                layoutView.js
+              </a>
+            
+              
+              <a class="source" href="menuView.html">
+                menuView.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>defaultControl.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/*global require, define, $, console */</span>
+
+<span class="hljs-comment">/**
+ * @module defaultControl
+ */</span>
+define([<span class="hljs-string">'can'</span>],
+    <span class="hljs-comment">/**
+     * @name module:defaultControl
+     * @description Default control component. Common methods &amp; behavior
+     * @class can.Control
+     * @extends can.Control
+     * @constructor
+     * @requires can {Object} canjs
+     * @returns can.Control {Function} constructor
+     */</span>
+        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(can)</span> {</span>
+<span class="hljs-pi">        "use strict"</span>;
+
+        <span class="hljs-keyword">return</span> can.Control.extend({
+            <span class="hljs-comment">/**
+             * @name module:defaultControl#showError
+             * @description Assigned model error indication
+             * @param [name] {String} Property name
+             * @function
+             */</span>
+            showError: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(name)</span> {</span>
+                <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>, err;
+                name = name.toString();
+                <span class="hljs-comment">/* istanbul ignore else */</span>
+                <span class="hljs-keyword">if</span> (name &amp;&amp; self.model &amp;&amp; self.model.errors) {
+                    err = self.model.errors(name);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>NB Zepto cannot attach [Array] to DOM so we need use .toString() additionally</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                    self.element.find(<span class="hljs-string">"[data-error="</span> + name + <span class="hljs-string">"]"</span>).html(err ? err[name].toString() : <span class="hljs-string">""</span>);
+                }
+                <span class="hljs-keyword">return</span> err;
+                <span class="hljs-comment">/** There's no handler for null-error event in model, so we have to use onchange bind
+                 self.model.bind("error", function (ev, attr, errors) {
+                    self.element.find("[data-error=" + attr + "]").html(errors[attr]);
+                });
+                 */</span>
+            },
+            <span class="hljs-comment">/**
+             * @name module:defaultControl#hide
+             * @description Hides control
+             * @function
+             */</span>
+            hide: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
+                self.element.hide();
+            },
+            <span class="hljs-comment">/**
+             * @name module:defaultControl#show
+             * @description Shows control
+             * @function
+             */</span>
+            show: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+                <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
+                self.element.show();
+            }
+        });
+    });</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

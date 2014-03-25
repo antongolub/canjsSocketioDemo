@@ -1,0 +1,23 @@
+.b-section{
+  .controlError,
+  #add{
+    display: none;
+  }
+  &--new{
+    #add{
+      display: inline;
+    }
+    #save,
+    #remove{
+      display: none
+    }
+  }
+  &--error{
+    > *{
+      display: none;
+    }
+    .controlError{
+      display: block;
+    }
+  }
+}
