@@ -1,6 +1,6 @@
 canjsSocketioDemo
 =================
 
-The simplest demo application built with the Canjs and Socket.io
+The simplest application built with Canjs and Socket.io
 
 [Demo](http://demo.antongolub.ru:8000/)
